@@ -1,5 +1,8 @@
 ﻿using DSA;
 HashMap hashMap = new HashMap();
-string s = "abcdeda";
-var c = hashMap.RepeatedCharacter(s);
-Console.WriteLine(c);
+int[] nums = [1, 2, 3, 5, 6, 8, 10];
+var num = hashMap.FindNumbers(nums);
+foreach (int i in num)
+{
+    Console.WriteLine(i);
+}

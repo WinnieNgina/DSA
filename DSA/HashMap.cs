@@ -34,4 +34,24 @@ public class HashMap
         }
         return c;
     }
+    public List<int> FindNumbers(int[] nums)
+    {
+        HashSet<int> num = new HashSet<int>();
+        var numbers = new List<int>();
+        for (int i = 1; i < nums.Length;i++)
+        {
+                num.Add(nums[i]);    
+        }
+        for (int j = 0; j < nums.Length; j++)
+        {
+            int x = nums[j] - 1;
+            int y = nums[j] + 1;
+            if (!num.Contains(x) && !nums.Contains(y))
+            {
+                numbers.Add(nums[j]);
+            }
+        }
+        return numbers;
+       
+    }
 }
