@@ -56,7 +56,7 @@ public class HashMap
     }
     public bool CheckIfPangram(string sentence)
     {
-        HashSet<char> chars = new HashSet<char>();
+        HashSet<char> chars = new();
         for (int i = 0; i < sentence.Length; i++)
         {
             chars.Add(sentence[i]);
@@ -69,6 +69,37 @@ public class HashMap
             }
         }
         return true;
+
+    }
+    public int MissingNumber(int[] nums)
+    {
+        HashSet<int> numbers = new();
+        int n = nums.Length;
+        for (int i = 0; i < n; i++)
+        {
+            numbers.Add(nums[i]);
+        }
+        for (int j = 0; j <= n; j++)
+        {
+            if (!numbers.Contains(j))
+            {
+                return j;
+            }
+        }
+        return -1;
+
+    }
+    public int MissingNumberSol2(int[] nums)
+    {
+        int sum = 0;
+        int totalSum = 0;
+        int n = nums.Length;
+        for (int i = 0; i < n; i++)
+        {
+            sum += nums[i];
+            totalSum += i + 1;
+        }
+        return totalSum - sum;
 
     }
 }
