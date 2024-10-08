@@ -184,4 +184,31 @@ public class HashMap
            .OrderBy(key => key)
            .ToList();
     }
+    public bool AreOccurrencesEqual(string s)
+    {
+        Dictionary<char, int> chars = new();
+        char c;
+        for (int i = 0; i < s.Length; i++)
+        {
+            c = s[i];
+            if (chars.ContainsKey(c))
+            {
+                chars[c] ++;
+            }
+            else
+            {
+                chars[c] = 1;
+            }
+        }
+        char k = s[0];
+        int num = chars[k];
+        foreach (var item in chars.Values)
+        {
+            if (item != num)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 }
