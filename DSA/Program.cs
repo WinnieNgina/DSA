@@ -1,8 +1,13 @@
 ﻿using DSA;
 HashMap hashMap = new HashMap();
-int[] nums = [1, 2, 3, 5, 6, 8, 10];
-var num = hashMap.FindNumbers(nums);
-foreach (int i in num)
+int[][] nums = new int[][]
 {
-    Console.WriteLine(i);
-}
+    new int[] { 3, 1, 2, 4, 5 },
+    new int[] { 1, 2, 3, 4 },
+    new int[] { 3, 4, 5, 6 }
+};
+var ans = hashMap.Intersection(nums);
+foreach(int n in ans)
+{
+    Console.WriteLine(n);
+}    

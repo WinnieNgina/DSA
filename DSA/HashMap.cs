@@ -1,4 +1,6 @@
-﻿namespace DSA;
+﻿using System.Collections.Generic;
+
+namespace DSA;
 
 public class HashMap
 {
@@ -101,5 +103,85 @@ public class HashMap
         }
         return totalSum - sum;
 
+    }
+    public int CountElements(int[] arr)
+    {
+        HashSet<int> nums = new(arr);
+        int count = 0;
+
+        for (int j = 0; j < arr.Length; j++)
+        {
+            int x = arr[j] + 1;
+            if (nums.Contains(x))
+            {
+                count++;
+            }
+        }
+        return count;
+    }
+    public int Find_Longest_Substring(string s, int k)
+    {
+        var counts = new Dictionary<char, int>();
+        int left = 0;
+        int ans = 0;
+
+        for (int right = 0; right < s.Length; right++)
+        {
+            char c = s[right];
+            if (counts.ContainsKey(c))
+            {
+                counts[c] ++;
+            }
+            else
+            {
+                counts[c] = 1;
+            }
+
+
+            while (counts.Count > k)
+            {
+                char remove = s[left];
+                counts[remove]--;
+                if (counts[remove] == 0)
+                {
+                    counts.Remove(remove);
+                }
+
+                left++;
+            }
+            int temp = right - left + 1;
+
+            if (temp > ans)
+            {
+                ans = temp;
+            }
+        }
+        return ans;
+    }
+    public IList<int> Intersection (int[][] arr)
+    {
+        int n = arr.GetLength(0);
+        Dictionary <int, int> counts = new Dictionary<int, int>();
+        for (int i = 0; i < arr[0].Length; i++)
+        {
+            int num = arr[0][i];
+            counts[num] = 1;
+        }
+        for (int i = 1; i < n; i++)
+        {
+            for (int j = 0;  j < arr[i].Length; j++)
+            {
+                int num2 = arr[i][j];
+                if (counts.ContainsKey(num2))
+                {
+                    counts[num2]++;
+                }
+            }
+        }
+       return counts
+           .Where(v => v.Value == n)
+           .Select(p => p.Key)
+           .OrderBy(key => key)
+           .ToList();
     }
 }
