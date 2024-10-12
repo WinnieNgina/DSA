@@ -267,4 +267,45 @@ public class HashMap
         }
         return count;
     }
+    public IList<IList<int>> FindWinners(int[][] matches)
+    {
+        Dictionary<int, int[]> counts = new();
+        int winner;
+        int loser;
+        IList<int> wins = new List<int>();
+        IList<int> lose = new List<int>();
+        IList<IList<int>> answers = new List<IList<int>>();
+
+        for (int i = 0; i < matches.Length; i++)
+        {
+            winner = matches[i][0];
+            loser = matches[i][1];
+            if (!counts.ContainsKey(winner))
+            {
+                counts[winner] = new int[2];
+            }
+            if (!counts.ContainsKey(loser))
+            {
+                counts[loser] = new int[2];
+            }
+            counts[winner][0]++;
+            counts[loser][1]++;
+        }
+        foreach (int key in counts.Keys)
+        {
+            if (counts[key][1] == 0)
+            {
+                wins.Add(key);
+            }
+            if (counts[key][1] == 1)
+            {
+                lose.Add(key);
+            }
+        }
+        wins = wins.OrderBy(x => x).ToList();
+        lose = lose.OrderBy(x => x).ToList();
+        answers.Add(wins);
+        answers.Add(lose);
+        return answers;
+    }
 }
