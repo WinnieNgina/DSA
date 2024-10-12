@@ -211,4 +211,60 @@ public class HashMap
         }
         return true;
     }
+    // Prefix Sum
+    public int SubarraySum(int[] nums, int k)
+    {
+        Dictionary<int, int> prefix = new();
+        int count = 0;
+        int sum = 0;
+        prefix[0] = 1;
+        for (int i = 0; i < nums.Length; i++)
+        {
+            sum += nums[i];
+            int temp = sum - k;
+            if (prefix.ContainsKey(temp))
+            {
+                count += prefix[temp];
+            }
+            if (prefix.ContainsKey(sum))
+            {
+                prefix[sum]++;
+            }
+            else
+            {
+                prefix[sum] = 1;
+            }
+        }
+        return count;
+    }
+    public int NumberOfSubarrays(int[] nums, int k)
+    {
+        Dictionary<int, int> prefix = new();
+        prefix[0] = 1;
+        int count = 0;
+        int sum = 0;
+        for (int i = 0; i < nums.Length; i++)
+        {
+            nums[i] = nums[i] % 2;
+        }
+
+        for (int j = 0; j < nums.Length; j++)
+        {
+            sum += nums[j];
+            int temp = sum - k;
+            if (prefix.ContainsKey(temp))
+            {
+                count += prefix[temp];
+            }
+            if (prefix.ContainsKey(sum))
+            {
+                prefix[sum]++;
+            }
+            else
+            {
+                prefix[sum] = 1;
+            }
+        }
+        return count;
+    }
 }
