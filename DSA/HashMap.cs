@@ -308,4 +308,33 @@ public class HashMap
         answers.Add(lose);
         return answers;
     }
+    public int LargestUniqueNumber(int[] nums)
+    {
+        Dictionary<int, int> counts = new();
+        int large = -1;
+        for (int i = 0; i < nums.Length; i++)
+        {
+            int key = nums[i];
+            if (counts.ContainsKey(key))
+            {
+                counts[key]++;
+            }
+            else
+            {
+                counts[key] = 1;
+            }
+        }
+        foreach (int key in counts.Keys)
+        {
+            if (counts[key] == 1)
+            {
+                if (key > large)
+                {
+                    large = key;
+                }
+            }
+        }
+        return large;
+
+    }
 }
