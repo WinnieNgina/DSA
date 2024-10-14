@@ -337,4 +337,25 @@ public class HashMap
         return large;
 
     }
+    public int MaxNumberOfBalloons(string text)
+    {
+        Dictionary<char, int> counts = new();
+        foreach (char c in "balloon")
+        {
+            counts[c] = 0;
+        }
+        for (int i = 0; i < text.Length; i++)
+        {
+            char key = text[i];
+            if (counts.ContainsKey(key))
+            {
+                counts[key]++;
+            }
+        }
+        int val = counts['b'] >= counts['a'] ? counts['a'] : counts['b'];
+        val = val > counts['n'] ? counts['n'] : val;
+        int twin = counts['l'] >= counts['o'] ? counts['o'] : counts['l'];
+        twin = twin / 2;
+        return val >= twin ? twin : val;
+    }
 }
