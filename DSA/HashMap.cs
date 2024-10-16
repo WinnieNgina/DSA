@@ -358,4 +358,39 @@ public class HashMap
         twin = twin / 2;
         return val >= twin ? twin : val;
     }
+    public int RearrangeCharacters(string s, string target)
+    {
+        Dictionary<char, int> counts = new();
+        Dictionary<char, int> nums = new();
+        foreach (char c in target)
+        {
+            counts[c] = 0;
+            if (nums.ContainsKey(c))
+            {
+                nums[c]++;
+            }
+            else
+            {
+                nums[c] = 1;
+            }
+        }
+        foreach (char c in s)
+        {
+            if (counts.ContainsKey(c))
+            {
+                counts[c]++;
+            }
+        }
+        int val = counts[target[0]] / nums[target[0]];
+        for (int i = 1; i < target.Length; i++)
+        {
+            char c = target[i];
+            int temp = counts[c] / nums[c];
+            if (temp < val)
+            {
+                val = temp;
+            }
+        }
+        return val;
+    }
 }
