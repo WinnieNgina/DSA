@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 
 namespace DSA;
 
@@ -392,5 +393,68 @@ public class HashMap
             }
         }
         return val;
+    }
+    public IList<IList<string>> GroupAnagrams (string[] s)
+    {
+        Dictionary<string,  IList<string>> counts = new();  
+        List<IList<string>> ans = new();
+        foreach (string str in s)
+        {
+            char[] chars = str.ToCharArray();
+            Array.Sort(chars);
+            string key = new string(chars);
+            if (counts.ContainsKey(key))
+            {
+                counts[key].Add(str);
+            }
+            else
+            {
+                counts[key] = new List<string> { str };
+            }
+        }
+        foreach(string key in counts.Keys)
+        {
+            ans.Add(counts[key]);
+        }
+        return ans;
+
+    }
+    public int MinimumCardPickup(int[] cards)
+    {
+        Dictionary<int, List<int>> counts = new();
+        int ans = -1;
+        for (int i = 0; i < cards.Length; i++)
+        {
+            int key = cards[i];
+            if (counts.ContainsKey(key))
+            {
+                counts[key].Add(i);
+            }
+            else
+            {
+                counts[key] = new List<int> { i };
+            }
+        }
+
+        // Find the minimum difference between two occurrences of the same card
+        foreach (int key in counts.Keys)
+        {
+            if (counts[key].Count >= 2)
+            {
+                List<int> nums = counts[key];
+
+                // Compare all consecutive pairs
+                for (int i = 1; i < nums.Count; i++)
+                {
+                    int temp = nums[i] - nums[i - 1] + 1;
+                    if (ans == -1 || temp < ans)
+                    {
+                        ans = temp;
+                    }
+                }
+            }
+        }
+
+        return ans;
     }
 }
