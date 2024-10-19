@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 
 namespace DSA;
@@ -455,6 +456,61 @@ public class HashMap
             }
         }
 
+        return ans;
+    }
+    public int MinimumCardPickup2(int[] cards)
+    {
+        Dictionary<int, int> dic = new Dictionary<int, int>();
+        int ans = int.MaxValue;
+
+        for (int i = 0; i < cards.Length; i++)
+        {
+            int num = cards[i];
+
+            if (dic.ContainsKey(num))
+            {
+                ans = Math.Min(ans, i - dic[num] + 1);
+            }
+
+            dic[num] = i;
+        }
+
+        return ans == int.MaxValue ? -1 : ans;
+    }
+    public int MaximumSum(int[] nums)
+    {
+        Dictionary<int, int> counts = new();
+        int ans = -1;
+        for (int i = 0; i < nums.Length; i++)
+        {
+            int n = nums[i];
+            int num = n;
+            int key = 0;
+            while (n > 0)
+            {
+                key = key + n % 10;
+                n = n / 10;
+            }
+            if (counts.ContainsKey(key))
+            {
+                int j = counts[key];
+                int temp = num + nums[j];
+                if (ans < temp)
+                {
+                    ans = temp;
+                }
+                if (num > nums[j])
+                {
+                    counts[key] = i;
+                }
+            }
+            else
+            {
+                counts[key] = i;
+
+            }
+
+        }
         return ans;
     }
 }
