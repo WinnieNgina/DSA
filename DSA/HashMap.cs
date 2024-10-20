@@ -623,4 +623,61 @@ public class HashMap
 
         return true;
     }
+    public int NumJewelsInStones(string jewels, string stones)
+    {
+        Dictionary<char, int> counts = new();
+        int count = 0;
+        for (int i = 0; i < stones.Length; i++)
+        {
+            char key = stones[i];
+            if (counts.ContainsKey(key))
+            {
+                counts[key]++;
+            }
+            else
+            {
+                counts[key] = 1;
+            }
+        }
+        for (int i = 0; i < jewels.Length; i++)
+        {
+            char key = jewels[i];
+            if (counts.ContainsKey(key))
+            {
+                count += counts[key];
+            }
+        }
+        return count;
+
+    }
+    
+    public int LengthOfLongestSubstring(string s)
+    {
+        Dictionary<string, int> counts = new();
+        string subs = "";
+        int n = 0;
+        for (int i = 0; i < s.Length; i++)
+        {
+            char c = s[i];
+            if (subs.Contains(c))
+            {
+                counts[subs] = subs.Length;
+                subs = subs.Substring(subs.IndexOf(c) + 1);
+            }
+            subs += c;
+
+        }
+        if (!string.IsNullOrEmpty(subs))
+        {
+            counts[subs] = subs.Length;
+        }
+        foreach (string key in counts.Keys)
+        {
+            if (counts[key] > n)
+            {
+                n = counts[key];
+            }
+        }
+        return n;
+    }
 }
