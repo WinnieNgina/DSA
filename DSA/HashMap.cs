@@ -513,4 +513,114 @@ public class HashMap
         }
         return ans;
     }
+    public int EqualPairs(int[][] grid)
+    {
+        Dictionary<string, int> counts = new();
+        int n = grid.Length;
+        for (int r = 0; r < n; r++)
+        {
+            var row = string.Join(",", grid[r]);
+            if (counts.ContainsKey(row))
+            {
+                counts[row]++;
+            }
+            else
+            {
+                counts[row] = 1;
+            }
+        }
+        int equals = 0;
+        for (int c = 0; c < n; c++)
+        {
+            var column = new List<int>();
+            for (int r = 0; r < n; r++)
+            {
+                column.Add(grid[r][c]);
+            }
+            var colKey = string.Join(",", column);
+            if (counts.ContainsKey(colKey))
+            {
+                equals += counts[colKey];
+            }
+        }
+        return equals;
+    }
+    public bool CanConstruct(string ransomNote, string magazine)
+    {
+        Dictionary<char, int> counts = new();
+        Dictionary<char, int> notes = new();
+        for (int i = 0; i < magazine.Length; i++)
+        {
+            char key = magazine[i];
+            if (counts.ContainsKey(key))
+            {
+                counts[key]++;
+            }
+            else
+            {
+                counts[key] = 1;
+            }
+        }
+        for (int i = 0; i < ransomNote.Length; i++)
+        {
+            char key = ransomNote[i];
+            if (notes.ContainsKey(key))
+            {
+                notes[key]++;
+            }
+            else
+            {
+                notes[key] = 1;
+            }
+        }
+        foreach (char key in notes.Keys)
+        {
+            if (counts.ContainsKey(key))
+            {
+                if (notes[key] > counts[key])
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    public bool CanConstruct2(string ransomNote, string magazine)
+    {
+        Dictionary<char, int> counts = new();
+        for (int i = 0; i < magazine.Length; i++)
+        {
+            char key = magazine[i];
+            if (counts.ContainsKey(key))
+            {
+                counts[key]++;
+            }
+            else
+            {
+                counts[key] = 1;
+            }
+        }
+        for (int i = 0; i < ransomNote.Length; i++)
+        {
+            char key = ransomNote[i];
+            if (counts.ContainsKey(key))
+            {
+                counts[key]--;
+                if (counts[key] < 0)
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
