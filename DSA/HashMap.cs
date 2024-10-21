@@ -680,4 +680,44 @@ public class HashMap
         }
         return n;
     }
+    public bool ContainsDuplicate(int[] nums)
+    {
+        Dictionary<int, int> counts = new();
+        foreach (int key in nums)
+        {
+            if (counts.ContainsKey(key))
+            {
+                return true;
+            }
+            else
+            {
+                counts[key] = 1;
+            }
+
+        }
+        return false;
+    }
+    public string DestCity(IList<IList<string>> paths)
+    {
+        Dictionary<string, string> counts = new();
+        HashSet<string> cities = new();
+        string ans = "";
+        foreach (IList<string> dest in paths)
+        {
+            string fromCity = dest[0];
+            string toCity = dest[1];
+            cities.Add(fromCity);
+            cities.Add(toCity);
+            counts[fromCity] = toCity;
+        }
+        foreach (string key in cities)
+        {
+            if (!counts.ContainsKey(key))
+            {
+                ans = key;
+            }
+        }
+        return ans;
+
+    }
 }
