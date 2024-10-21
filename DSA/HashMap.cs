@@ -720,4 +720,29 @@ public class HashMap
         return ans;
 
     }
+    public int SumOfUnique(int[] nums)
+    {
+        Dictionary<int, int> counts = new();
+        int sum = 0;
+        for (int i = 0; i < nums.Length; i++)
+        {
+            int key = nums[i];
+            if (counts.ContainsKey(key))
+            {
+                counts[key]++;
+            }
+            else
+            {
+                counts[key] = 1;
+            }
+        }
+        foreach (int key in counts.Keys)
+        {
+            if (counts[key] == 1)
+            {
+                sum += key;
+            }
+        }
+        return sum;
+    }
 }
