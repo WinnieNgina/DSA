@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Text;
 
 namespace DSA;
 
@@ -744,5 +745,272 @@ public class HashMap
             }
         }
         return sum;
+    }
+    public int MaxFrequencyElements(int[] nums)
+    {
+        Dictionary<int, int> counts = new();
+        int n = 1;
+        int count = 0;
+        foreach (int key in nums)
+        {
+            if (counts.ContainsKey(key))
+            {
+                counts[key]++;
+                if (counts[key] > n)
+                {
+                    n = counts[key];
+                }
+            }
+            else
+            {
+                counts[key] = 1;
+            }
+        }
+        foreach (int key in counts.Keys)
+        {
+            if (counts[key] == n)
+            {
+                count += counts[key];
+            }
+        }
+        return count;
+    }
+    public int FindLucky(int[] arr)
+    {
+        Dictionary<int, int> counts = new();
+        int num = -1;
+        foreach (int key in arr)
+        {
+            if (counts.ContainsKey(key))
+            {
+                counts[key]++;
+            }
+            else
+            {
+                counts[key] = 1;
+            }
+        }
+        foreach (int key in counts.Keys)
+        {
+            if (key == counts[key])
+            {
+                if (key > num)
+                {
+                    num = key;
+                }
+            }
+        }
+        return num;
+    }
+    public bool UniqueOccurrences(int[] arr)
+    {
+        Dictionary<int, int> counts = new();
+        HashSet<int> keys = new();
+        int n = 0;
+        foreach (int key in arr)
+        {
+            if (counts.ContainsKey(key))
+            {
+                counts[key]++;
+            }
+            else
+            {
+                counts[key] = 1;
+            }
+        }
+        foreach (int key in counts.Keys)
+        {
+            keys.Add(counts[key]);
+        }
+        foreach (int val in keys)
+        {
+            n += val;
+        }
+        if (n == arr.Length)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    public string FrequencySort(string s)
+    {
+        Dictionary<char, int> counts = new();
+        List<int> nums = new();
+        StringBuilder str = new();
+        for (int i = 0; i < s.Length; i++)
+        {
+            char key = s[i];
+            if (counts.ContainsKey(key))
+            {
+                counts[key]++;
+            }
+            else
+            {
+                counts[key] = 1;
+            }
+        }
+        foreach (var key in counts.Keys)
+        {
+            nums.Add(counts[key]);
+        }
+        nums.Sort();
+        for (int i = nums.Count - 1; i >= 0; i--)
+        {
+            foreach (var key in counts.Keys)
+            {
+                if (counts[key] == nums[i] && !str.ToString().Contains(key))
+                {
+                    str.Append(key, nums[i]);
+                }
+            }
+        }
+        return str.ToString();
+    }
+    public int MaxSubarrayLength(int[] nums, int k)
+    {
+        Dictionary<int, int> counts = new();
+        int l = 0;
+        int ans = 0;
+        for (int i = 0; i < nums.Length; i++)
+        {
+            int key = nums[i];
+            if (counts.ContainsKey(key))
+            {
+                counts[key]++;
+                int val = counts[key];
+                while (val > k)
+                {
+                    if (nums[l] == key)
+                    {
+                        counts[key]--;
+                        val--;
+                        l++;
+                    }
+                    else
+                    {
+                        int v = nums[l];
+                        counts[v]--;
+                        l++;
+                    }
+                }
+            }
+            else
+            {
+                counts[key] = 1;
+            }
+            int temp = i - l + 1;
+            if (ans < temp)
+            {
+                ans = temp;
+            }
+        }
+        return ans;
+    }
+    public int NumSubarraysWithSum(int[] nums, int goal)
+    {
+        Dictionary<int, int> prefix = new();
+        prefix[0] = 1;
+        int count = 0;
+        int sum = 0;
+        for (int i = 0; i < nums.Length; i++)
+        {
+            nums[i] = nums[i] % 2;
+        }
+        for (int j = 0; j < nums.Length; j++)
+        {
+            sum += nums[j];
+            int temp = sum - goal;
+            if (prefix.ContainsKey(temp))
+            {
+                count += prefix[temp];
+            }
+            if (prefix.ContainsKey(sum))
+            {
+                prefix[sum]++;
+            }
+            else
+            {
+                prefix[sum] = 1;
+            }
+        }
+        return count;
+    }
+    public bool IsIsomorphic(string s, string t)
+    {
+        if (s.Length != t.Length)
+        {
+            return false;
+        }
+        Dictionary<char, char> counts = new();
+        Dictionary<char, char> count = new();
+        for (int i = 0; i < s.Length; i++)
+        {
+            char skey = s[i];
+            char tkey = t[i];
+            if (counts.ContainsKey(skey))
+            {
+                if (counts[skey] != tkey)
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                counts[skey] = tkey;
+            }
+            if (count.ContainsKey(tkey))
+            {
+                if (count[tkey] != skey)
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                count[tkey] = skey;
+            }
+        }
+        return true;
+    }
+    public bool WordPattern(string pattern, string s)
+    {
+        Dictionary<char, string> counts = new();
+        Dictionary<string, char> count = new();
+        string[] words = s.Split(' ');
+        if (pattern.Length != words.Length)
+        {
+            return false;
+        }
+        for (int i = 0; i < words.Length; i++)
+        {
+            char pkey = pattern[i];
+            string skey = words[i];
+            if (counts.ContainsKey(pkey))
+            {
+                if (counts[pkey] != skey)
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                counts[pkey] = skey;
+            }
+            if (count.ContainsKey(skey))
+            {
+                if (count[skey] != pkey)
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                count[skey] = pkey;
+            }
+        }
+        return true;
     }
 }
